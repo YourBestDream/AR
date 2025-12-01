@@ -29,42 +29,6 @@
         color: white;
       }
     </style>
-
-    <!-- Component to auto-normalize OBJ size -->
-    <script>
-      // All models will be scaled so their height ~= TARGET_HEIGHT (change this to make everything bigger/smaller)
-      const TARGET_HEIGHT = 80;
-
-      AFRAME.registerComponent("auto-scale-to-height", {
-        schema: { target: { type: "number", default: TARGET_HEIGHT } },
-
-        init: function () {
-          const el = this.el;
-          const data = this.data;
-
-          const applyScale = () => {
-            const mesh = el.getObject3D("mesh");
-            if (!mesh) return;
-
-            const box = new THREE.Box3().setFromObject(mesh);
-            const size = new THREE.Vector3();
-            box.getSize(size);
-
-            const height = size.y || 1;
-            const factor = data.target / height;
-
-            el.setAttribute("scale", factor + " " + factor + " " + factor);
-          };
-
-          el.addEventListener("model-loaded", applyScale);
-
-          // In case the model is already there when init runs
-          if (el.getObject3D("mesh")) {
-            applyScale();
-          }
-        },
-      });
-    </script>
   </head>
 
   <body style="margin: 0; overflow: hidden;">
@@ -91,7 +55,7 @@
         <img id="img-castle" src="images/castle.png" />
       </a-assets>
 
-      <!-- 1) SWORD MARKER: intro + castle bad ending -->
+      <!-- NFT MARKERS (used only as triggers) -->
       <a-nft
         id="marker-sword"
         type="nft"
@@ -101,45 +65,8 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-      >
-        <!-- Intro: magic sword -->
-        <a-entity
-          id="sword-model-intro"
-          obj-model="obj: #model-sword"
-          position="0 0 0"
-          rotation="-90 0 0"
-          auto-scale-to-height
-          visible="false"
-        ></a-entity>
+      ></a-nft>
 
-        <a-entity
-          id="text-sword-intro"
-          position="0 40 0"
-          rotation="-90 0 0"
-          text="value: Are you the hero born to save this world?; align: center; width: 150; color: yellow"
-          visible="false"
-        ></a-entity>
-
-        <!-- Castle path bad ending: demon lord kills you -->
-        <a-entity
-          id="castle-sword-skull-model"
-          obj-model="obj: #model-skull"
-          position="0 0 0"
-          rotation="-90 0 0"
-          auto-scale-to-height
-          visible="false"
-        ></a-entity>
-
-        <a-entity
-          id="text-castle-bad"
-          position="0 40 0"
-          rotation="-90 0 0"
-          text="value: Demon lord was much faster than you; align: center; width: 150; color: red"
-          visible="false"
-        ></a-entity>
-      </a-nft>
-
-      <!-- 2A) FOREST MARKER: choose forest path -->
       <a-nft
         id="marker-forest"
         type="nft"
@@ -149,27 +76,8 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-      >
-        <!-- Tree object -->
-        <a-entity
-          id="forest-tree-model"
-          obj-model="obj: #model-tree"
-          position="0 0 0"
-          rotation="-90 0 0"
-          auto-scale-to-height
-          visible="false"
-        ></a-entity>
+      ></a-nft>
 
-        <a-entity
-          id="text-forest"
-          position="0 40 0"
-          rotation="-90 0 0"
-          text="value: Wild bear have spotted you; align: center; width: 150; color: #00ff00"
-          visible="false"
-        ></a-entity>
-      </a-nft>
-
-      <!-- 2A.2) BEAR MARKER: forest bad ending -->
       <a-nft
         id="marker-bear"
         type="nft"
@@ -179,26 +87,8 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-      >
-        <a-entity
-          id="bear-skull-model"
-          obj-model="obj: #model-skull"
-          position="0 0 0"
-          rotation="-90 0 0"
-          auto-scale-to-height
-          visible="false"
-        ></a-entity>
+      ></a-nft>
 
-        <a-entity
-          id="text-bear-dead"
-          position="0 40 0"
-          rotation="-90 0 0"
-          text="value: Dead end; align: center; width: 150; color: red"
-          visible="false"
-        ></a-entity>
-      </a-nft>
-
-      <!-- 2B.1) CASTLE MARKER: castle path intro -->
       <a-nft
         id="marker-castle"
         type="nft"
@@ -208,28 +98,8 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-      >
-        <!-- Castle image as object -->
-        <a-plane
-          id="castle-image"
-          src="#img-castle"
-          position="0 0 0"
-          rotation="-90 0 0"
-          width="250"
-          height="150"
-          visible="false"
-        ></a-plane>
+      ></a-nft>
 
-        <a-entity
-          id="text-castle-intro"
-          position="0 50 0"
-          rotation="-90 0 0"
-          text="value: Demon lord was preparing for your arrival his entire life; align: center; width: 180; color: #ccccff"
-          visible="false"
-        ></a-entity>
-      </a-nft>
-
-      <!-- 2B.3) AMG-43 MARKER: good ending (cup) -->
       <a-nft
         id="marker-amg"
         type="nft"
@@ -239,27 +109,125 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-      >
+      ></a-nft>
+
+      <!-- CAMERA + ALL 3D CONTENT CENTERED IN VIEW -->
+      <a-entity id="mainCamera" camera>
+        <!-- Common idea:
+             - All models at z = -2 (in front of the camera)
+             - y slightly adjusted
+             - SAME scale for all: scale="1 1 1"
+        -->
+
+        <!-- Intro: magic sword -->
+        <a-entity
+          id="sword-model-intro"
+          obj-model="obj: #model-sword"
+          position="0 -0.3 -2"
+          rotation="0 0 0"
+          scale="1 1 1"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-sword-intro"
+          position="0 0.6 -2"
+          rotation="0 0 0"
+          text="value: Are you the hero born to save this world?; align: center; width: 2.5; color: yellow"
+          visible="false"
+        ></a-entity>
+
+        <!-- Castle path bad ending: demon lord kills you -->
+        <a-entity
+          id="castle-sword-skull-model"
+          obj-model="obj: #model-skull"
+          position="0 -0.3 -2"
+          rotation="0 0 0"
+          scale="1 1 1"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-castle-bad"
+          position="0 0.6 -2"
+          rotation="0 0 0"
+          text="value: Demon lord was much faster than you; align: center; width: 2.5; color: red"
+          visible="false"
+        ></a-entity>
+
+        <!-- Forest path: tree -->
+        <a-entity
+          id="forest-tree-model"
+          obj-model="obj: #model-tree"
+          position="0 -0.3 -2"
+          rotation="0 0 0"
+          scale="1 1 1"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-forest"
+          position="0 0.6 -2"
+          rotation="0 0 0"
+          text="value: Wild bear have spotted you; align: center; width: 2.5; color: #00ff00"
+          visible="false"
+        ></a-entity>
+
+        <!-- Forest bad ending: bear skull -->
+        <a-entity
+          id="bear-skull-model"
+          obj-model="obj: #model-skull"
+          position="0 -0.3 -2"
+          rotation="0 0 0"
+          scale="1 1 1"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-bear-dead"
+          position="0 0.6 -2"
+          rotation="0 0 0"
+          text="value: Dead end; align: center; width: 2; color: red"
+          visible="false"
+        ></a-entity>
+
+        <!-- Castle intro: image -->
+        <a-plane
+          id="castle-image"
+          src="#img-castle"
+          position="0 0 -2"
+          rotation="0 0 0"
+          width="1.8"
+          height="1.1"
+          visible="false"
+        ></a-plane>
+
+        <a-entity
+          id="text-castle-intro"
+          position="0 0.8 -2"
+          rotation="0 0 0"
+          text="value: Demon lord was preparing for your arrival his entire life; align: center; width: 2.5; color: #ccccff"
+          visible="false"
+        ></a-entity>
+
+        <!-- AMG-43 good ending: winner cup -->
         <a-entity
           id="amg-cup-model"
           obj-model="obj: #model-cup"
-          position="0 0 0"
-          rotation="-90 0 0"
-          auto-scale-to-height
+          position="0 -0.3 -2"
+          rotation="0 0 0"
+          scale="1 1 1"
           visible="false"
         ></a-entity>
 
         <a-entity
           id="text-amg-good"
-          position="0 40 0"
-          rotation="-90 0 0"
-          text="value: He definitely didn't expect that; align: center; width: 150; color: gold"
+          position="0 0.6 -2"
+          rotation="0 0 0"
+          text="value: He definitely didn't expect that; align: center; width: 2.5; color: gold"
           visible="false"
         ></a-entity>
-      </a-nft>
-
-      <!-- Camera follows device -->
-      <a-entity camera></a-entity>
+      </a-entity>
     </a-scene>
 
     <!-- GAME LOGIC -->
@@ -279,7 +247,7 @@
           FOREST_DEAD: "forest_dead", // bear ending
           CASTLE: "castle", // after castle scan
           CASTLE_BAD_END: "castle_bad_end", // sword again
-          CASTLE_GOOD_END: "castle_good_end", // amg-43
+          CASTLE_GOOD_END: "castle_good_end" // amg-43
         };
 
         let stage = STAGE.START;
@@ -303,7 +271,7 @@
           textCastleBad: document.getElementById("text-castle-bad"),
 
           amgCup: document.getElementById("amg-cup-model"),
-          textAmgGood: document.getElementById("text-amg-good"),
+          textAmgGood: document.getElementById("text-amg-good")
         };
 
         function hideAll() {
