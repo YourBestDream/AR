@@ -29,6 +29,42 @@
         color: white;
       }
     </style>
+
+    <!-- Component to auto-normalize OBJ size -->
+    <script>
+      // All models will be scaled so their height ~= TARGET_HEIGHT (change this to make everything bigger/smaller)
+      const TARGET_HEIGHT = 80;
+
+      AFRAME.registerComponent("auto-scale-to-height", {
+        schema: { target: { type: "number", default: TARGET_HEIGHT } },
+
+        init: function () {
+          const el = this.el;
+          const data = this.data;
+
+          const applyScale = () => {
+            const mesh = el.getObject3D("mesh");
+            if (!mesh) return;
+
+            const box = new THREE.Box3().setFromObject(mesh);
+            const size = new THREE.Vector3();
+            box.getSize(size);
+
+            const height = size.y || 1;
+            const factor = data.target / height;
+
+            el.setAttribute("scale", factor + " " + factor + " " + factor);
+          };
+
+          el.addEventListener("model-loaded", applyScale);
+
+          // In case the model is already there when init runs
+          if (el.getObject3D("mesh")) {
+            applyScale();
+          }
+        },
+      });
+    </script>
   </head>
 
   <body style="margin: 0; overflow: hidden;">
@@ -72,7 +108,7 @@
           obj-model="obj: #model-sword"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="2 2 2"
+          auto-scale-to-height
           visible="false"
         ></a-entity>
 
@@ -90,7 +126,7 @@
           obj-model="obj: #model-skull"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="2 2 2"
+          auto-scale-to-height
           visible="false"
         ></a-entity>
 
@@ -120,7 +156,7 @@
           obj-model="obj: #model-tree"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="2 2 2"
+          auto-scale-to-height
           visible="false"
         ></a-entity>
 
@@ -149,7 +185,7 @@
           obj-model="obj: #model-skull"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="2 2 2"
+          auto-scale-to-height
           visible="false"
         ></a-entity>
 
@@ -209,7 +245,7 @@
           obj-model="obj: #model-cup"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="2 2 2"
+          auto-scale-to-height
           visible="false"
         ></a-entity>
 
@@ -243,7 +279,7 @@
           FOREST_DEAD: "forest_dead", // bear ending
           CASTLE: "castle", // after castle scan
           CASTLE_BAD_END: "castle_bad_end", // sword again
-          CASTLE_GOOD_END: "castle_good_end" // amg-43
+          CASTLE_GOOD_END: "castle_good_end", // amg-43
         };
 
         let stage = STAGE.START;
@@ -267,7 +303,7 @@
           textCastleBad: document.getElementById("text-castle-bad"),
 
           amgCup: document.getElementById("amg-cup-model"),
-          textAmgGood: document.getElementById("text-amg-good")
+          textAmgGood: document.getElementById("text-amg-good"),
         };
 
         function hideAll() {
