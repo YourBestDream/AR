@@ -56,7 +56,7 @@
       </a-assets>
 
       <!-- 1) SWORD MARKER: intro + castle bad ending -->
-        <a-nft
+      <a-nft
         id="marker-sword"
         type="nft"
         url="https://yourbestdream.github.io/AR/nfts/sword"
@@ -65,22 +65,22 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-        >
+      >
         <!-- Intro: magic sword -->
         <a-entity
           id="sword-model-intro"
           obj-model="obj: #model-sword"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="0.5 0.5 0.5"
+          scale="2 2 2"
           visible="false"
         ></a-entity>
 
         <a-entity
           id="text-sword-intro"
-          position="0 80 0"
+          position="0 40 0"
           rotation="-90 0 0"
-          text="value: Are you the hero born to save this world?; align: center; width: 200; color: yellow"
+          text="value: Are you the hero born to save this world?; align: center; width: 150; color: yellow"
           visible="false"
         ></a-entity>
 
@@ -90,21 +90,21 @@
           obj-model="obj: #model-skull"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="0.5 0.5 0.5"
+          scale="2 2 2"
           visible="false"
         ></a-entity>
 
         <a-entity
           id="text-castle-bad"
-          position="0 80 0"
+          position="0 40 0"
           rotation="-90 0 0"
-          text="value: Demon lord was much faster than you; align: center; width: 200; color: red"
+          text="value: Demon lord was much faster than you; align: center; width: 150; color: red"
           visible="false"
         ></a-entity>
       </a-nft>
 
       <!-- 2A) FOREST MARKER: choose forest path -->
-        <a-nft
+      <a-nft
         id="marker-forest"
         type="nft"
         url="https://yourbestdream.github.io/AR/nfts/forest"
@@ -113,28 +113,28 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-        >
+      >
         <!-- Tree object -->
         <a-entity
           id="forest-tree-model"
           obj-model="obj: #model-tree"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="0.5 0.5 0.5"
+          scale="2 2 2"
           visible="false"
         ></a-entity>
 
         <a-entity
           id="text-forest"
-          position="0 80 0"
+          position="0 40 0"
           rotation="-90 0 0"
-          text="value: Wild bear have spotted you; align: center; width: 200; color: #00ff00"
+          text="value: Wild bear have spotted you; align: center; width: 150; color: #00ff00"
           visible="false"
         ></a-entity>
       </a-nft>
 
       <!-- 2A.2) BEAR MARKER: forest bad ending -->
-        <a-nft
+      <a-nft
         id="marker-bear"
         type="nft"
         url="https://yourbestdream.github.io/AR/nfts/bear"
@@ -143,27 +143,27 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-        >
+      >
         <a-entity
           id="bear-skull-model"
           obj-model="obj: #model-skull"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="0.5 0.5 0.5"
+          scale="2 2 2"
           visible="false"
         ></a-entity>
 
         <a-entity
           id="text-bear-dead"
-          position="0 80 0"
+          position="0 40 0"
           rotation="-90 0 0"
-          text="value: Dead end; align: center; width: 200; color: red"
+          text="value: Dead end; align: center; width: 150; color: red"
           visible="false"
         ></a-entity>
       </a-nft>
 
       <!-- 2B.1) CASTLE MARKER: castle path intro -->
-        <a-nft
+      <a-nft
         id="marker-castle"
         type="nft"
         url="https://yourbestdream.github.io/AR/nfts/castle"
@@ -172,29 +172,29 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-        >
+      >
         <!-- Castle image as object -->
         <a-plane
           id="castle-image"
           src="#img-castle"
           position="0 0 0"
           rotation="-90 0 0"
-          width="200"
-          height="120"
+          width="250"
+          height="150"
           visible="false"
         ></a-plane>
 
         <a-entity
           id="text-castle-intro"
-          position="0 80 0"
+          position="0 50 0"
           rotation="-90 0 0"
-          text="value: Demon lord was preparing for your arrival his entire life; align: center; width: 220; color: #ccccff"
+          text="value: Demon lord was preparing for your arrival his entire life; align: center; width: 180; color: #ccccff"
           visible="false"
         ></a-entity>
       </a-nft>
 
       <!-- 2B.3) AMG-43 MARKER: good ending (cup) -->
-        <a-nft
+      <a-nft
         id="marker-amg"
         type="nft"
         url="https://yourbestdream.github.io/AR/nfts/amg-43"
@@ -203,21 +203,21 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-        >
+      >
         <a-entity
           id="amg-cup-model"
           obj-model="obj: #model-cup"
           position="0 0 0"
           rotation="-90 0 0"
-          scale="0.5 0.5 0.5"
+          scale="2 2 2"
           visible="false"
         ></a-entity>
 
         <a-entity
           id="text-amg-good"
-          position="0 80 0"
+          position="0 40 0"
           rotation="-90 0 0"
-          text="value: He definitely didn't expect that; align: center; width: 200; color: gold"
+          text="value: He definitely didn't expect that; align: center; width: 150; color: gold"
           visible="false"
         ></a-entity>
       </a-nft>
