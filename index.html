@@ -65,8 +65,45 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-      ></a-nft>
+      >
+        <!-- Intro: magic sword -->
+        <a-entity
+          id="sword-model-intro"
+          obj-model="obj: #model-sword"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="2 2 2"
+          visible="false"
+        ></a-entity>
 
+        <a-entity
+          id="text-sword-intro"
+          position="0 40 0"
+          rotation="-90 0 0"
+          text="value: Are you the hero born to save this world?; align: center; width: 150; color: yellow"
+          visible="false"
+        ></a-entity>
+
+        <!-- Castle path bad ending: demon lord kills you -->
+        <a-entity
+          id="castle-sword-skull-model"
+          obj-model="obj: #model-skull"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="2 2 2"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-castle-bad"
+          position="0 40 0"
+          rotation="-90 0 0"
+          text="value: Demon lord was much faster than you; align: center; width: 150; color: red"
+          visible="false"
+        ></a-entity>
+      </a-nft>
+
+      <!-- 2A) FOREST MARKER: choose forest path -->
       <a-nft
         id="marker-forest"
         type="nft"
@@ -76,8 +113,27 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-      ></a-nft>
+      >
+        <!-- Tree object -->
+        <a-entity
+          id="forest-tree-model"
+          obj-model="obj: #model-tree"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="2 2 2"
+          visible="false"
+        ></a-entity>
 
+        <a-entity
+          id="text-forest"
+          position="0 40 0"
+          rotation="-90 0 0"
+          text="value: Wild bear have spotted you; align: center; width: 150; color: #00ff00"
+          visible="false"
+        ></a-entity>
+      </a-nft>
+
+      <!-- 2A.2) BEAR MARKER: forest bad ending -->
       <a-nft
         id="marker-bear"
         type="nft"
@@ -87,8 +143,26 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-      ></a-nft>
+      >
+        <a-entity
+          id="bear-skull-model"
+          obj-model="obj: #model-skull"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="2 2 2"
+          visible="false"
+        ></a-entity>
 
+        <a-entity
+          id="text-bear-dead"
+          position="0 40 0"
+          rotation="-90 0 0"
+          text="value: Dead end; align: center; width: 150; color: red"
+          visible="false"
+        ></a-entity>
+      </a-nft>
+
+      <!-- 2B.1) CASTLE MARKER: castle path intro -->
       <a-nft
         id="marker-castle"
         type="nft"
@@ -214,9 +288,9 @@
         <a-entity
           id="amg-cup-model"
           obj-model="obj: #model-cup"
-          position="0 -0.3 -2"
-          rotation="0 0 0"
-          scale="0.5 0.5 0.5"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="2 2 2"
           visible="false"
         ></a-entity>
 
