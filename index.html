@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fantasy AR Quest</title>
+
+    <!-- A-Frame + AR.js (NFT) -->
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+    <!-- Loader style -->
+    <style>
+      .arjs-loader {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .arjs-loader div {
+        text-align: center;
+        font-size: 1.25em;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body style="margin: 0; overflow: hidden;">
+    <!-- minimal loader shown until NFT descriptors are loaded -->
+    <div class="arjs-loader">
+      <div>Loading, please wait...</div>
+    </div>
+
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      renderer="logarithmicDepthBuffer: true;"
+      embedded
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    >
+      <!-- Preload models and images -->
+      <a-assets>
+        <!-- OBJ models from /objects -->
+        <a-asset-item id="model-sword" src="objects/Sword.obj"></a-asset-item>
+        <a-asset-item id="model-tree" src="objects/tree.obj"></a-asset-item>
+        <a-asset-item id="model-skull" src="objects/bad skull.obj"></a-asset-item>
+        <a-asset-item id="model-cup" src="objects/WinnerCup.obj"></a-asset-item>
+
+        <!-- Castle as 2D image “object” -->
+        <img id="img-castle" src="images/castle.png" />
+      </a-assets>
+
+      <!-- 1) SWORD MARKER: intro + castle bad ending -->
+      <a-nft
+        id="marker-sword"
+        type="nft"
+        url="nfts/sword"
+        emitevents="true"
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance="0.01"
+        smoothThreshold="5"
+      >
+        <!-- Intro: magic sword -->
+        <a-entity
+          id="sword-model-intro"
+          obj-model="obj: #model-sword"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="0.5 0.5 0.5"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-sword-intro"
+          position="0 80 0"
+          rotation="-90 0 0"
+          text="value: Are you the hero born to save this world?; align: center; width: 200; color: yellow"
+          visible="false"
+        ></a-entity>
+
+        <!-- Castle path bad ending: demon lord kills you -->
+        <a-entity
+          id="castle-sword-skull-model"
+          obj-model="obj: #model-skull"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="0.5 0.5 0.5"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-castle-bad"
+          position="0 80 0"
+          rotation="-90 0 0"
+          text="value: Demon lord was much faster than you; align: center; width: 200; color: red"
+          visible="false"
+        ></a-entity>
+      </a-nft>
+
+      <!-- 2A) FOREST MARKER: choose forest path -->
+      <a-nft
+        id="marker-forest"
+        type="nft"
+        url="nfts/forest"
+        emitevents="true"
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance="0.01"
+        smoothThreshold="5"
+      >
+        <!-- Tree object -->
+        <a-entity
+          id="forest-tree-model"
+          obj-model="obj: #model-tree"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="0.5 0.5 0.5"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-forest"
+          position="0 80 0"
+          rotation="-90 0 0"
+          text="value: Wild bear have spotted you; align: center; width: 200; color: #00ff00"
+          visible="false"
+        ></a-entity>
+      </a-nft>
+
+      <!-- 2A.2) BEAR MARKER: forest bad ending -->
+      <a-nft
+        id="marker-bear"
+        type="nft"
+        url="nfts/bear"
+        emitevents="true"
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance="0.01"
+        smoothThreshold="5"
+      >
+        <a-entity
+          id="bear-skull-model"
+          obj-model="obj: #model-skull"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="0.5 0.5 0.5"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-bear-dead"
+          position="0 80 0"
+          rotation="-90 0 0"
+          text="value: Dead end; align: center; width: 200; color: red"
+          visible="false"
+        ></a-entity>
+      </a-nft>
+
+      <!-- 2B.1) CASTLE MARKER: castle path intro -->
+      <a-nft
+        id="marker-castle"
+        type="nft"
+        url="nfts/castle"
+        emitevents="true"
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance="0.01"
+        smoothThreshold="5"
+      >
+        <!-- Castle image as object -->
+        <a-plane
+          id="castle-image"
+          src="#img-castle"
+          position="0 0 0"
+          rotation="-90 0 0"
+          width="200"
+          height="120"
+          visible="false"
+        ></a-plane>
+
+        <a-entity
+          id="text-castle-intro"
+          position="0 80 0"
+          rotation="-90 0 0"
+          text="value: Demon lord was preparing for your arrival his entire life; align: center; width: 220; color: #ccccff"
+          visible="false"
+        ></a-entity>
+      </a-nft>
+
+      <!-- 2B.3) AMG-43 MARKER: good ending (cup) -->
+      <a-nft
+        id="marker-amg"
+        type="nft"
+        url="nfts/amg-43"
+        emitevents="true"
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance="0.01"
+        smoothThreshold="5"
+      >
+        <a-entity
+          id="amg-cup-model"
+          obj-model="obj: #model-cup"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="0.5 0.5 0.5"
+          visible="false"
+        ></a-entity>
+
+        <a-entity
+          id="text-amg-good"
+          position="0 80 0"
+          rotation="-90 0 0"
+          text="value: He definitely didn't expect that; align: center; width: 200; color: gold"
+          visible="false"
+        ></a-entity>
+      </a-nft>
+
+      <!-- Camera follows device -->
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <!-- GAME LOGIC -->
+    <script>
+      // Hide loader when NFT descriptors are ready
+      window.addEventListener("arjs-nft-loaded", () => {
+        const loader = document.querySelector(".arjs-loader");
+        if (loader) loader.style.display = "none";
+      });
+
+      window.addEventListener("DOMContentLoaded", () => {
+        // Simple state machine for the quest
+        const STAGE = {
+          START: "start",
+          GOT_SWORD: "got_sword", // after first sword scan
+          FOREST: "forest", // after forest scan
+          FOREST_DEAD: "forest_dead", // bear ending
+          CASTLE: "castle", // after castle scan
+          CASTLE_BAD_END: "castle_bad_end", // sword again
+          CASTLE_GOOD_END: "castle_good_end" // amg-43
+        };
+
+        let stage = STAGE.START;
+        let branch = null; // "forest" | "castle" | null
+
+        // Helper: collect all AR objects we might toggle
+        const objects = {
+          swordIntro: document.getElementById("sword-model-intro"),
+          textSwordIntro: document.getElementById("text-sword-intro"),
+
+          forestTree: document.getElementById("forest-tree-model"),
+          textForest: document.getElementById("text-forest"),
+
+          bearSkull: document.getElementById("bear-skull-model"),
+          textBearDead: document.getElementById("text-bear-dead"),
+
+          castleImage: document.getElementById("castle-image"),
+          textCastleIntro: document.getElementById("text-castle-intro"),
+
+          castleSwordSkull: document.getElementById("castle-sword-skull-model"),
+          textCastleBad: document.getElementById("text-castle-bad"),
+
+          amgCup: document.getElementById("amg-cup-model"),
+          textAmgGood: document.getElementById("text-amg-good")
+        };
+
+        function hideAll() {
+          Object.values(objects).forEach((el) => {
+            if (el) el.setAttribute("visible", false);
+          });
+        }
+
+        // Ensure everything starts hidden (requirement: only one object at a time)
+        hideAll();
+
+        // Marker entities
+        const markerSword = document.getElementById("marker-sword");
+        const markerForest = document.getElementById("marker-forest");
+        const markerBear = document.getElementById("marker-bear");
+        const markerCastle = document.getElementById("marker-castle");
+        const markerAmg = document.getElementById("marker-amg");
+
+        // OPTIONAL: when any marker is lost, hide objects so nothing floats
+        [markerSword, markerForest, markerBear, markerCastle, markerAmg].forEach((m) => {
+          if (!m) return;
+          m.addEventListener("markerLost", () => {
+            hideAll();
+          });
+        });
+
+        // 1) SWORD marker logic
+        markerSword.addEventListener("markerFound", () => {
+          // GOOD END / BAD END are terminal
+          if (
+            stage === STAGE.FOREST_DEAD ||
+            stage === STAGE.CASTLE_BAD_END ||
+            stage === STAGE.CASTLE_GOOD_END
+          ) {
+            return;
+          }
+
+          if (stage === STAGE.START) {
+            // First time: hero finds the magic sword
+            stage = STAGE.GOT_SWORD;
+            branch = null;
+
+            hideAll();
+            objects.swordIntro.setAttribute("visible", true);
+            objects.textSwordIntro.setAttribute("visible", true);
+          } else if (stage === STAGE.CASTLE && branch === "castle") {
+            // Castle path -> scanning sword again = demon lord kills you
+            stage = STAGE.CASTLE_BAD_END;
+
+            hideAll();
+            objects.castleSwordSkull.setAttribute("visible", true);
+            objects.textCastleBad.setAttribute("visible", true);
+          }
+        });
+
+        // 2A.1) FOREST marker logic
+        markerForest.addEventListener("markerFound", () => {
+          // Only allowed after sword, before any ending, and before choosing another branch
+          if (stage !== STAGE.GOT_SWORD || branch === "castle") return;
+          if (
+            stage === STAGE.FOREST_DEAD ||
+            stage === STAGE.CASTLE_BAD_END ||
+            stage === STAGE.CASTLE_GOOD_END
+          ) {
+            return;
+          }
+
+          stage = STAGE.FOREST;
+          branch = "forest";
+
+          hideAll();
+          objects.forestTree.setAttribute("visible", true);
+          objects.textForest.setAttribute("visible", true);
+        });
+
+        // 2A.2) BEAR marker logic (Dead end)
+        markerBear.addEventListener("markerFound", () => {
+          // Must have taken forest path first
+          if (stage !== STAGE.FOREST || branch !== "forest") return;
+          if (
+            stage === STAGE.FOREST_DEAD ||
+            stage === STAGE.CASTLE_BAD_END ||
+            stage === STAGE.CASTLE_GOOD_END
+          ) {
+            return;
+          }
+
+          stage = STAGE.FOREST_DEAD;
+
+          hideAll();
+          objects.bearSkull.setAttribute("visible", true);
+          objects.textBearDead.setAttribute("visible", true);
+        });
+
+        // 2B.1) CASTLE marker logic
+        markerCastle.addEventListener("markerFound", () => {
+          // Only allowed after sword, and only if we haven't locked into forest path
+          if (stage !== STAGE.GOT_SWORD || branch === "forest") return;
+          if (
+            stage === STAGE.FOREST_DEAD ||
+            stage === STAGE.CASTLE_BAD_END ||
+            stage === STAGE.CASTLE_GOOD_END
+          ) {
+            return;
+          }
+
+          stage = STAGE.CASTLE;
+          branch = "castle";
+
+          hideAll();
+          objects.castleImage.setAttribute("visible", true);
+          objects.textCastleIntro.setAttribute("visible", true);
+        });
+
+        // 2B.3) AMG-43 marker logic (Good ending)
+        markerAmg.addEventListener("markerFound", () => {
+          // Only valid on castle path after scanning castle
+          if (stage !== STAGE.CASTLE || branch !== "castle") return;
+          if (
+            stage === STAGE.FOREST_DEAD ||
+            stage === STAGE.CASTLE_BAD_END ||
+            stage === STAGE.CASTLE_GOOD_END
+          ) {
+            return;
+          }
+
+          stage = STAGE.CASTLE_GOOD_END;
+
+          hideAll();
+          objects.amgCup.setAttribute("visible", true);
+          objects.textAmgGood.setAttribute("visible", true);
+        });
+      });
+    </script>
+  </body>
+</html>
